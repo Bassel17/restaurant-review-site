@@ -23,7 +23,7 @@ export const App = (props) => {
 
     const fetchData = async () => {
       try{
-        const response = await fetch (`https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAyHplLn72iIDSgWZrwaWz3XDvgJmGhNsc&location=${positionState.lat},${positionState.lng}&radius=50000&type=restaurant`,{
+        const response = await fetch (`https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${process.env.REACT_APP_GOOGLE_API_KEY}&location=${positionState.lat},${positionState.lng}&radius=50000&type=restaurant`,{
         method: 'GET',  
         cache: 'no-cache',
         credentials: 'same-origin',
@@ -59,5 +59,5 @@ export const App = (props) => {
 }
 
 export default GoogleApiWrapper({
-  apiKey: ("AIzaSyAyHplLn72iIDSgWZrwaWz3XDvgJmGhNsc")
+  apiKey: (process.env.REACT_APP_GOOGLE_API_KEY)
 })(App)

@@ -1,0 +1,16 @@
+.RestaurantCard{
+    width:90%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin-bottom: 1em;
+    &__image{
+        width: 100%;
+        height: auto;
+    }
+
+    &__bar{
+        display: grid;
+        grid-template: 1fr/1fr 1fr;
+        align-items: center;
+        justify-items: center;
+    }
+}

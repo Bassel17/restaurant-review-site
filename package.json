@@ -6,6 +6,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "google-maps-react": "^2.0.6",
+    "google-places-web": "^1.0.1",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -31,5 +32,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@iconify/icons-ic": "^1.0.12",
+    "@iconify/react": "^1.1.3"
   }
 }

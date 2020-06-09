@@ -1,0 +1,13 @@
+body{
+    overflow: hidden;
+}
+
+.burgerButtonContainer{
+    width:100%;
+    display: flex;
+    justify-content: flex-end;
+    &__button{
+        padding:0.5em 1em;
+        font-size: 3em;
+    }
+}

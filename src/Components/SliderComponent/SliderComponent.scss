@@ -1,0 +1,26 @@
+.slider{
+    background-color: #fff;
+    width:40vw;
+    height: 100vh;
+    position:absolute;
+    z-index: 1;
+    overflow: hidden;
+    transition: right 1s;
+    &--appear{
+        right:0;
+    }
+    
+    &--not-appear{
+        right:-40vw;
+    }
+}
+
+.sliderButtonContainer{
+    width:100%;
+    display: flex;
+    justify-content: flex-start;
+    &__button{
+        padding:0.5em 1em;
+        font-size: 3em;
+    }
+}

@@ -5,34 +5,19 @@ import './App.scss';
 import {Icon} from '@iconify/react';
 import roundMenu from '@iconify/icons-ic/round-menu';
 import SliderComponent from './Components/SliderComponent/SliderComponent';
+import GooglePlacesRepo from './Repositories/GooglePlacesRepo/GooglePlacesRepo';
+const placesRepo = new GooglePlacesRepo();
 
 export const App = (props) => {
 
-    const restaurants = [
-    {
-      title:"restaurant 1",
-      rating:"4.0"
-    },
-    {
-      title:"restaurant 2",
-      rating:"3.5"
-    },
-    {
-      title:"restaurant 3",
-      rating:"3.0"
-    },
-    {
-      title:"restaurant 4",
-      rating:"4.5"
-    }
-  ]
-
     Places.apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
     const [positionState, setPositionState] = useState("");
-
-    const [places, setPlaces] = useState("");
-
+    const [restaurants, setRestaurants] = useState([]);
     const [visible,setVisible] = useState("slider--not-appear");
+
+    const getRestaurantsNearby =()=>{
+      placesRepo.getPlaceInfo(positionState);
+    }
 
     useEffect(() => {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -41,24 +26,20 @@ export const App = (props) => {
           lng:position.coords.longitude
         });
       });
-      //fetchData()
+    },[]);
+
+    useEffect(() => {
+      setUpRestaurants();
+    }, [positionState]);
+
+    useEffect(() => {
+      setRestaurants(placesRepo.places);
     });
 
-    const fetchData = async () => {
-      try{
-      const response = await Places.nearbysearch({
-        location: `${positionState.lat},${positionState.lng}`, // LatLon delimited by ,
-        radius: "500",  // Radius cannot be used if rankBy set to DISTANCE
-        type: [], // Undefined type will return all types
-        // rankby: "distance" // See google docs for different possible values
-      });
-     
-      const { status, results, next_page_token, html_attributions } = response;
-      console.log(results);
-    } catch (error) {
-      console.log(error);
-    }
-    };
+   const setUpRestaurants = async ()=>{
+      getRestaurantsNearby();
+   }
+
     if(positionState === ""){
       return <h1>Loading</h1>
     }else{
@@ -73,7 +54,13 @@ export const App = (props) => {
       >
         <div className="burgerButtonContainer"><Icon className="burgerButtonContainer__button" icon={roundMenu} onClick={()=>setVisible("slider--appear")} /></div>
         <Marker 
-                position={positionState} name={'Current location'} />
+                position={positionState} name={'Current location'} 
+                icon={{
+                  url: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png",
+                  anchor: new props.google.maps.Point(32,32),
+                  scaledSize: new props.google.maps.Size(64,64)
+                }}
+                />
         <InfoWindow>
             <div>
               <h1>ok</h1>

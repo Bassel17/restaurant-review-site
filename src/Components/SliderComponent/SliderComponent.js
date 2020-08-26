@@ -14,8 +14,9 @@ const SliderComponent = (props) =>{
             <div style = {{display:"flex",flexDirection:"column",alignItems:"center"}}>
                 {props.restaurants.map((restaurant,index)=>
                 <RestaurantCard
-                    restaurantTitle={restaurant.title}
+                    restaurantTitle={restaurant.name}
                     restaurantRating={restaurant.rating}
+                    icon = {restaurant?.photos }
                     key= {index}
                 />) 
                 } 

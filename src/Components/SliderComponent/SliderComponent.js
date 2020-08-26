@@ -5,7 +5,7 @@ import roundMenu from '@iconify/icons-ic/round-menu';
 import RestaurantCard from '../RestaurantCard/RestaurantCard';
 
 const SliderComponent = (props) =>{
-    
+
     return(
         <div className={`slider ${props.visible}`}>
             <div className="sliderButtonContainer">
@@ -17,6 +17,8 @@ const SliderComponent = (props) =>{
                     restaurantTitle={restaurant.name}
                     restaurantRating={restaurant.rating}
                     icon = {restaurant?.photos }
+                    place_id = {restaurant.place_id}
+                    location = {restaurant.geometry.location}
                     key= {index}
                 />) 
                 } 

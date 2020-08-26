@@ -1,8 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './RestaurantCard.scss';
+import GooglePlacesRepo from '../../Repositories/GooglePlacesRepo/GooglePlacesRepo';
+import ReactStars from "react-rating-stars-component";
+const placesRepo = new GooglePlacesRepo();
 
 const RestaurantCard = (props) =>{
-    console.log(props.icon);
+
+    useEffect(()=>{
+        placesRepo.getPlaceDetails(props.location,props.place_id);
+    })
+
     return(
         <div className="RestaurantCard">
             <img 
@@ -12,7 +19,16 @@ const RestaurantCard = (props) =>{
             />
             <div className="RestaurantCard__bar">
                 <p className="RestaurantCard__bar__name">{props.restaurantTitle}</p>
-                <div className="RestaurantCard__bar__rating">{props.restaurantRating}</div>
+                <div className="RestaurantCard__bar__rating">
+                <ReactStars
+                    count={5}
+                    size={24}
+                    isHalf={true}
+                    edit={false}
+                    activeColor="#ffd700"
+                    value={props.restaurantRating}
+                />
+                </div>
             </div>
         </div>
     );

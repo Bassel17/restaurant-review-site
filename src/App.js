@@ -14,6 +14,7 @@ export const App = (props) => {
     const [positionState, setPositionState] = useState("");
     const [restaurants, setRestaurants] = useState([]);
     const [visible,setVisible] = useState("slider--not-appear");
+    const [placesReadyState, setPlaceReadyState] = useState(false);
 
     const getRestaurantsNearby =()=>{
       placesRepo.getPlaceInfo(positionState);
@@ -29,16 +30,12 @@ export const App = (props) => {
     },[]);
 
     useEffect(() => {
-      setUpRestaurants();
+      getRestaurantsNearby();
     }, [positionState]);
 
     useEffect(() => {
       setRestaurants(placesRepo.places);
     });
-
-   const setUpRestaurants = async ()=>{
-      getRestaurantsNearby();
-   }
 
     if(positionState === ""){
       return <h1>Loading</h1>
@@ -56,11 +53,23 @@ export const App = (props) => {
         <Marker 
                 position={positionState} name={'Current location'} 
                 icon={{
-                  url: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png",
+                  url: 'https://cdn2.iconfinder.com/data/icons/font-awesome/1792/map-marker-256.png',
                   anchor: new props.google.maps.Point(32,32),
                   scaledSize: new props.google.maps.Size(64,64)
                 }}
-                />
+        />
+
+        {restaurants.map((restaurant, index)=>{
+          return <Marker 
+            key={index}
+            position={restaurant.geometry.location} name={restaurant.name} 
+            icon={{
+              url: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png",
+              anchor: new props.google.maps.Point(32,32),
+              scaledSize: new props.google.maps.Size(64,64)
+            }}
+        />
+        })}
         <InfoWindow>
             <div>
               <h1>ok</h1>

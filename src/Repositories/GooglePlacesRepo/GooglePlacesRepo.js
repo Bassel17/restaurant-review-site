@@ -41,7 +41,7 @@ class GooglePlacesRepo {
         service.getDetails(request, callback);
           
         function callback(place, status) {
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
                 console.log(place);
             }
         }

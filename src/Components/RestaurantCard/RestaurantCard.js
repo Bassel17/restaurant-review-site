@@ -14,7 +14,7 @@ const RestaurantCard = (props) =>{
         <div className="RestaurantCard">
             <img 
                 className="RestaurantCard__image"
-                src={props.icon == undefined ?  "https://www.hopkinsmedicine.org/-/media/feature/noimageavailable.ashx":props.icon[0].getUrl(150)}
+                src={props.icon === undefined ?  "https://www.hopkinsmedicine.org/-/media/feature/noimageavailable.ashx":props.icon[0].getUrl(150)}
                 alt="restaurant street view"
             />
             <div className="RestaurantCard__bar">

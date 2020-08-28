@@ -5,6 +5,7 @@ import './App.scss';
 import {Icon} from '@iconify/react';
 import roundMenu from '@iconify/icons-ic/round-menu';
 import SliderComponent from './Components/SliderComponent/SliderComponent';
+import Loading from './Components/Loading/Loading';
 import GooglePlacesRepo from './Repositories/GooglePlacesRepo/GooglePlacesRepo';
 const placesRepo = new GooglePlacesRepo();
 
@@ -14,11 +15,7 @@ export const App = (props) => {
     const [positionState, setPositionState] = useState("");
     const [restaurants, setRestaurants] = useState([]);
     const [visible,setVisible] = useState("slider--not-appear");
-    const [placesReadyState, setPlaceReadyState] = useState(false);
 
-    const getRestaurantsNearby =()=>{
-      placesRepo.getPlaceInfo(positionState);
-    }
 
     useEffect(() => {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -30,7 +27,7 @@ export const App = (props) => {
     },[]);
 
     useEffect(() => {
-      getRestaurantsNearby();
+      placesRepo.getPlaceInfo(positionState);
     }, [positionState]);
 
     useEffect(() => {
@@ -38,7 +35,7 @@ export const App = (props) => {
     });
 
     if(positionState === ""){
-      return <h1>Loading</h1>
+      return <Loading/>
     }else{
     return (
       <React.Fragment>
@@ -48,7 +45,8 @@ export const App = (props) => {
           zoom={15}
           initialCenter={positionState}
           center={positionState}
-      >
+          loadingElement={<Loading/>}
+        >
         <div className="burgerButtonContainer"><Icon className="burgerButtonContainer__button" icon={roundMenu} onClick={()=>setVisible("slider--appear")} /></div>
         <Marker 
                 position={positionState} name={'Current location'} 

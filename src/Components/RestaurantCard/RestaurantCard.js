@@ -1,17 +1,11 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './RestaurantCard.scss';
-import GooglePlacesRepo from '../../Repositories/GooglePlacesRepo/GooglePlacesRepo';
 import ReactStars from "react-rating-stars-component";
-const placesRepo = new GooglePlacesRepo();
 
 const RestaurantCard = (props) =>{
 
-    useEffect(()=>{
-        placesRepo.getPlaceDetails(props.location,props.place_id);
-    })
-
     return(
-        <div className="RestaurantCard">
+        <div className="RestaurantCard" onClick = {props.showReviews}>
             <img 
                 className="RestaurantCard__image"
                 src={props.icon === undefined ?  "https://www.hopkinsmedicine.org/-/media/feature/noimageavailable.ashx":props.icon[0].getUrl(150)}

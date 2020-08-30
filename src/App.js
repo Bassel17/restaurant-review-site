@@ -6,6 +6,7 @@ import {Icon} from '@iconify/react';
 import roundMenu from '@iconify/icons-ic/round-menu';
 import SliderComponent from './Components/SliderComponent/SliderComponent';
 import Loading from './Components/Loading/Loading';
+import RestaurantDetails from './Components/RestaurantDetails/RestaurantDetails';
 import GooglePlacesRepo from './Repositories/GooglePlacesRepo/GooglePlacesRepo';
 const placesRepo = new GooglePlacesRepo();
 
@@ -15,6 +16,8 @@ export const App = (props) => {
     const [positionState, setPositionState] = useState("");
     const [restaurants, setRestaurants] = useState([]);
     const [visible,setVisible] = useState("slider--not-appear");
+    const [restaurantReview,setRestaurantReview] = useState("restaurant-details--hide");
+    const [restaurantInfo, setRestaurantInfo] = useState("");
 
 
     useEffect(() => {
@@ -34,12 +37,25 @@ export const App = (props) => {
       setRestaurants(placesRepo.places);
     });
 
+    const showReviews = (location,place_id) => {
+      setRestaurantInfo({
+        location,
+        place_id
+      });
+
+      setRestaurantReview("restaurant-details--show");
+    }
+
+    const hideReview = () => {
+      setRestaurantReview("restaurant-details--hide");
+    }
+
     if(positionState === ""){
       return <Loading/>
     }else{
     return (
       <React.Fragment>
-        <SliderComponent visible={visible} slideBack = {()=>setVisible("slider--not-appear")} restaurants={restaurants}/>
+        <SliderComponent visible={visible} slideBack = {()=>setVisible("slider--not-appear")} restaurants={restaurants} showReviews={showReviews}/>
         <Map
           google={props.google} 
           zoom={15}
@@ -74,6 +90,7 @@ export const App = (props) => {
             </div>
         </InfoWindow>
       </Map>
+      <RestaurantDetails class={restaurantReview} info={restaurantInfo} hide={hideReview}/>
       </React.Fragment>
   );
     }

@@ -5,7 +5,7 @@ class GooglePlacesRepo {
         this.places = [];
     }
 
-    getPlaceInfo(coordinates) { 
+    getPlaceInfo(coordinates, callback) { 
 
         const location = new google.maps.LatLng(coordinates.lat,coordinates.lng);
 
@@ -21,7 +21,7 @@ class GooglePlacesRepo {
         service.nearbySearch(request, (results,status)=>{
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 this.places = results;
-                console.log(results);
+                callback(results);
             }
         });
     }

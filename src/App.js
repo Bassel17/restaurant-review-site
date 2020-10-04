@@ -30,12 +30,8 @@ export const App = (props) => {
     },[]);
 
     useEffect(() => {
-      placesRepo.getPlaceInfo(positionState);
+      placesRepo.getPlaceInfo(positionState,setRestaurants);
     }, [positionState]);
-
-    useEffect(() => {
-      setRestaurants(placesRepo.places);
-    });
 
     const showReviews = (location,place_id) => {
       setRestaurantInfo({
@@ -50,6 +46,10 @@ export const App = (props) => {
       setRestaurantReview("restaurant-details--hide");
     }
 
+    const onMapClicked = (mapProps, map, clickEvent) => {
+      console.log("this is the ====>",clickEvent.latLng.lat(),clickEvent.latLng.lng());
+    }
+
     if(positionState === ""){
       return <Loading/>
     }else{
@@ -62,6 +62,7 @@ export const App = (props) => {
           initialCenter={positionState}
           center={positionState}
           loadingElement={<Loading/>}
+          onClick={onMapClicked}
         >
         <div className="burgerButtonContainer"><Icon className="burgerButtonContainer__button" icon={roundMenu} onClick={()=>setVisible("slider--appear")} /></div>
         <Marker 

@@ -1,12 +1,13 @@
 import React, {useState,useEffect} from 'react';
 import Places from "google-places-web";
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import './App.scss';
 import {Icon} from '@iconify/react';
 import roundMenu from '@iconify/icons-ic/round-menu';
 import SliderComponent from './Components/SliderComponent/SliderComponent';
 import Loading from './Components/Loading/Loading';
 import RestaurantDetails from './Components/RestaurantDetails/RestaurantDetails';
+import AddRestaurantModal from './Components/AddRestaurantModal/AddRestaurantModal';
 import GooglePlacesRepo from './Repositories/GooglePlacesRepo/GooglePlacesRepo';
 const placesRepo = new GooglePlacesRepo();
 
@@ -15,9 +16,11 @@ export const App = (props) => {
     Places.apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
     const [positionState, setPositionState] = useState("");
     const [restaurants, setRestaurants] = useState([]);
+    const [addedRestaurants,setAddedRestaurants] = useState([]);
     const [visible,setVisible] = useState("slider--not-appear");
     const [restaurantReview,setRestaurantReview] = useState("restaurant-details--hide");
     const [restaurantInfo, setRestaurantInfo] = useState("");
+    const [restaurantModalState, setRestaurantModalState] = useState(false);
 
 
     useEffect(() => {
@@ -48,14 +51,20 @@ export const App = (props) => {
 
     const onMapClicked = (mapProps, map, clickEvent) => {
       console.log("this is the ====>",clickEvent.latLng.lat(),clickEvent.latLng.lng());
+      toggleAddRestaurantModal(true);
+    }
+
+    const toggleAddRestaurantModal = (isVisible) => {
+      setRestaurantModalState(isVisible);
     }
 
     if(positionState === ""){
       return <Loading/>
     }else{
+      const restaurantsToShow = [...restaurants,...addedRestaurants]
     return (
       <React.Fragment>
-        <SliderComponent visible={visible} slideBack = {()=>setVisible("slider--not-appear")} restaurants={restaurants} showReviews={showReviews}/>
+        <SliderComponent visible={visible} slideBack = {()=>setVisible("slider--not-appear")} restaurants={restaurantsToShow} showReviews={showReviews}/>
         <Map
           google={props.google} 
           zoom={15}
@@ -74,7 +83,7 @@ export const App = (props) => {
                 }}
         />
 
-        {restaurants.map((restaurant, index)=>{
+        {restaurantsToShow.map((restaurant, index)=>{
           return <Marker 
             key={index}
             position={restaurant.geometry.location} name={restaurant.name} 
@@ -85,13 +94,12 @@ export const App = (props) => {
             }}
         />
         })}
-        <InfoWindow>
-            <div>
-              <h1>ok</h1>
-            </div>
-        </InfoWindow>
       </Map>
       <RestaurantDetails class={restaurantReview} info={restaurantInfo} hide={hideReview}/>
+      <AddRestaurantModal
+        isVisible = {restaurantModalState}
+        toggleModal = {toggleAddRestaurantModal}
+      />
       </React.Fragment>
   );
     }

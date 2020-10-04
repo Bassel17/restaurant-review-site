@@ -21,6 +21,7 @@ class GooglePlacesRepo {
         service.nearbySearch(request, (results,status)=>{
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 this.places = results;
+                console.log(results);
                 callback(results);
             }
         });

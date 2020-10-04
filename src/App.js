@@ -21,6 +21,7 @@ export const App = (props) => {
     const [restaurantReview,setRestaurantReview] = useState("restaurant-details--hide");
     const [restaurantInfo, setRestaurantInfo] = useState("");
     const [restaurantModalState, setRestaurantModalState] = useState(false);
+    const [clickedPosition, setClickedPosition] = useState();
 
 
     useEffect(() => {
@@ -50,8 +51,16 @@ export const App = (props) => {
     }
 
     const onMapClicked = (mapProps, map, clickEvent) => {
-      console.log("this is the ====>",clickEvent.latLng.lat(),clickEvent.latLng.lng());
+      setClickedPosition({
+        lat:clickEvent.latLng.lat(),
+        lng:clickEvent.latLng.lng()
+      })
       toggleAddRestaurantModal(true);
+    }
+
+    const addRestaurant = (restaurant) => {
+      setAddedRestaurants([...addedRestaurants,restaurant]);
+      toggleAddRestaurantModal(false);
     }
 
     const toggleAddRestaurantModal = (isVisible) => {
@@ -99,6 +108,8 @@ export const App = (props) => {
       <AddRestaurantModal
         isVisible = {restaurantModalState}
         toggleModal = {toggleAddRestaurantModal}
+        position = {clickedPosition}
+        addRestaurant = {addRestaurant}
       />
       </React.Fragment>
   );

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import './AddRestaurantModal.scss';
+import {makeRestaurantDataStructure} from '../../Helpers';
 
 const AddRestaurantModal = (props) => {
 
@@ -11,6 +12,9 @@ const AddRestaurantModal = (props) => {
 
     const addRestaurant = (event) => {
         event.preventDefault();
+        const restaurant = makeRestaurantDataStructure(restaurantName,props.position);
+        props.addRestaurant(restaurant);
+        setRestaurantName("");
     }
 
     const hideModal = (event) =>{

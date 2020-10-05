@@ -12,7 +12,6 @@ import GooglePlacesRepo from './Repositories/GooglePlacesRepo/GooglePlacesRepo';
 const placesRepo = new GooglePlacesRepo();
 
 export const App = (props) => {
-
     Places.apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
     const [positionState, setPositionState] = useState("");
     const [restaurants, setRestaurants] = useState([]);
@@ -42,7 +41,6 @@ export const App = (props) => {
         location,
         place_id
       });
-
       setRestaurantReview("restaurant-details--show");
     }
 
@@ -104,7 +102,13 @@ export const App = (props) => {
         />
         })}
       </Map>
-      <RestaurantDetails class={restaurantReview} info={restaurantInfo} hide={hideReview}/>
+      <RestaurantDetails 
+        class={restaurantReview} 
+        info={restaurantInfo} 
+        hide={hideReview}
+        placesRepo={placesRepo}
+      />
+
       <AddRestaurantModal
         isVisible = {restaurantModalState}
         toggleModal = {toggleAddRestaurantModal}

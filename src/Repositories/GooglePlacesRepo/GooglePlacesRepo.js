@@ -21,13 +21,12 @@ class GooglePlacesRepo {
         service.nearbySearch(request, (results,status)=>{
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 this.places = results;
-                console.log(results);
                 callback(results);
             }
         });
     }
 
-    getPlaceDetails(coordinates,placeId){
+    getPlaceDetails(coordinates,placeId, callback){
 
         const request = {
             placeId,
@@ -39,13 +38,11 @@ class GooglePlacesRepo {
         const map = new google.maps.Map(Element, {center: location, zoom: 15});
           
         const service = new google.maps.places.PlacesService(map);
-        service.getDetails(request, callback);
-          
-        function callback(place, status) {
+        service.getDetails(request, (place, status) => {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
-                console.log(place);
+                callback(place);
             }
-        }
+        });
     }
 }
 

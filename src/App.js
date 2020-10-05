@@ -16,6 +16,7 @@ export const App = (props) => {
     const [positionState, setPositionState] = useState("");
     const [restaurants, setRestaurants] = useState([]);
     const [addedRestaurants,setAddedRestaurants] = useState([]);
+    const [addedReviews,setAddedReviews] = useState([]);
     const [visible,setVisible] = useState("slider--not-appear");
     const [restaurantReview,setRestaurantReview] = useState("restaurant-details--hide");
     const [restaurantInfo, setRestaurantInfo] = useState("");
@@ -65,6 +66,10 @@ export const App = (props) => {
       setRestaurantModalState(isVisible);
     }
 
+    const addReview = (review) => {
+      setAddedReviews([...addedReviews,review]);
+    }
+
     if(positionState === ""){
       return <Loading/>
     }else{
@@ -107,6 +112,8 @@ export const App = (props) => {
         info={restaurantInfo} 
         hide={hideReview}
         placesRepo={placesRepo}
+        addReview = {addReview}
+        addedReviews = {addedReviews}
       />
 
       <AddRestaurantModal

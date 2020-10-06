@@ -5,7 +5,9 @@ import ReactStars from "react-rating-stars-component";
 
 const RestaurantDetails = (props) => {
 
-    const [restaurantDetails, setRestaurantDetails ] = useState();
+    const [restaurantDetails, setRestaurantDetails ] = useState({
+        reviews:[]
+    });
     const [username, setUsername] = useState("");
     const [review, setReview] = useState("");
     const [rating, setRating] = useState();
@@ -44,10 +46,11 @@ const RestaurantDetails = (props) => {
 
     const hide = () => {
         props.hide();
-        setRestaurantDetails();
+        setRestaurantDetails({
+            reviews:[]
+        });
     }
 
-    if(typeof restaurantDetails !== 'undefined'){
         return (
             <div className = {`restaurant-details ${props.class}`}>
                 <div className = "restaurant-details__close">
@@ -57,6 +60,9 @@ const RestaurantDetails = (props) => {
                     >
                         X
                     </span>
+                </div>
+                <div className ="restaurant-details__name">
+                <h1>{props.info.name}</h1>
                 </div>
                 <div className ="restaurant-details__reviews">
                     {typeof restaurantDetails.reviews !== 'undefined' ? 
@@ -73,21 +79,27 @@ const RestaurantDetails = (props) => {
                         return <></>
                     })}
                 </div>
-                <form className ="restaurant-details__form">
-                    <label >your name: </label>
-                    <input
-                        type="text"
-                        name="restaurant name"
-                        value={username}
-                        onChange={changeUserName}
-                    />
-                    <label >your review: </label>
-                    <textarea
-                        type="text"
-                        name="restaurant name"
-                        value={review}
-                        onChange={changeReview}
-                    />
+                <form className ="restaurant-details__form" onSubmit={addReview}>
+                    <div>
+                        <label >your name: </label>
+                        <input
+                            type="text"
+                            name="restaurant name"
+                            value={username}
+                            onChange={changeUserName}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label >your review: </label>
+                        <textarea
+                            type="text"
+                            name="restaurant name"
+                            value={review}
+                            onChange={changeReview}
+                            required
+                        />
+                    </div>
                     <ReactStars
                         count={5}
                         size={24}
@@ -97,19 +109,15 @@ const RestaurantDetails = (props) => {
                         value={rating}
                         onChange = {changeRating}
                     />
-
-                    <input 
-                        type="submit" 
-                        value="Add"
-                        onClick={addReview}
-                    />
-
+                    <div>
+                        <input 
+                            type="submit" 
+                            value="Add Review"
+                        />
+                    </div>
                 </form>
             </div>
         );
-    }else{
-        return <div></div>;
-    }
 }
 
 export default RestaurantDetails;

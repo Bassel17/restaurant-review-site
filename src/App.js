@@ -41,7 +41,8 @@ export const App = (props) => {
       setRestaurantInfo({
         location:restaurant.geometry.location,
         place_id:restaurant.place_id,
-        created:restaurant.created
+        created:restaurant.created,
+        name:restaurant.name
       });
       setRestaurantReview("restaurant-details--show");
     }

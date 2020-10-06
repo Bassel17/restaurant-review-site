@@ -1,5 +1,25 @@
 .ReviewCard-container {
-    border: 1px solid black;
-    width:50%;
-    height:150px;
+    padding:1em;
+    border: 1px solid grey;
+    display: flex;
+    width: 50%;
+    &__review{
+        display: flex;
+        flex-direction: column;
+        gap:1em;
+        width:100%;
+
+        &__name{
+            font-size: 10px;
+            align-self: flex-end;
+        }
+
+        &__rating{
+            align-self: flex-end;
+        }
+
+        &__text{
+            padding: 0 1em;
+        }
+    }
 }

@@ -5,7 +5,8 @@ export const makeRestaurantDataStructure = (RestaurantName,RestaurantLocation) =
         geometry:{
             location:RestaurantLocation
         },
-        name:RestaurantName
+        name:RestaurantName,
+        created:true
     }
 
     return restaurantStructure;

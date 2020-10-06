@@ -20,7 +20,7 @@ const SliderComponent = (props) =>{
                     place_id = {restaurant.place_id}
                     location = {restaurant.geometry.location}
                     key= {index}
-                    showReviews = {()=>props.showReviews(restaurant.geometry.location,restaurant.place_id)}
+                    showReviews = {()=>props.showReviews(restaurant)}
                 />) 
                 } 
             </div>

@@ -42,13 +42,18 @@ const RestaurantDetails = (props) => {
         setRating();
     }
 
+    const hide = () => {
+        props.hide();
+        setRestaurantDetails();
+    }
+
     if(typeof restaurantDetails !== 'undefined'){
         return (
             <div className = {`restaurant-details ${props.class}`}>
                 <div className = "restaurant-details__close">
                     <span 
                         className = "restaurant-details__close__button"
-                        onClick = {props.hide}
+                        onClick = {hide}
                     >
                         X
                     </span>

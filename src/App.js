@@ -37,10 +37,11 @@ export const App = (props) => {
       placesRepo.getPlaceInfo(positionState,setRestaurants);
     }, [positionState]);
 
-    const showReviews = (location,place_id) => {
+    const showReviews = (restaurant) => {
       setRestaurantInfo({
-        location,
-        place_id
+        location:restaurant.geometry.location,
+        place_id:restaurant.place_id,
+        created:restaurant.created
       });
       setRestaurantReview("restaurant-details--show");
     }

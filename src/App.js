@@ -72,6 +72,13 @@ export const App = (props) => {
       setAddedReviews([...addedReviews,review]);
     }
 
+    const centerMoved = (mapProps, map, e) => {
+      setPositionState({
+        lat:e.latLng.lat(),
+        lng:e.latLng.lng()
+      });
+    }
+
     if(positionState === ""){
       return <Loading/>
     }else{
@@ -95,6 +102,8 @@ export const App = (props) => {
                   anchor: new props.google.maps.Point(32,32),
                   scaledSize: new props.google.maps.Size(64,64)
                 }}
+                draggable={true}
+                onDragend={centerMoved}
         />
 
         {restaurantsToShow.map((restaurant, index)=>{

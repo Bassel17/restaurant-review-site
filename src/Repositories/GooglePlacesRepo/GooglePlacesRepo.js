@@ -13,7 +13,7 @@ class GooglePlacesRepo {
 
         const request = {
             location:location,
-            radius: '500',
+            radius: '1000',
             type: ['restaurant']
         };
       

@@ -14,6 +14,7 @@ const placesRepo = new GooglePlacesRepo();
 export const App = (props) => {
     Places.apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
     const [positionState, setPositionState] = useState("");
+    const [searchCenterState, setSearchCenterState] = useState("");
     const [restaurants, setRestaurants] = useState([]);
     const [addedRestaurants,setAddedRestaurants] = useState([]);
     const [addedReviews,setAddedReviews] = useState([]);
@@ -30,12 +31,16 @@ export const App = (props) => {
           lat:position.coords.latitude,
           lng:position.coords.longitude
         });
+        setSearchCenterState({
+          lat:position.coords.latitude,
+          lng:position.coords.longitude
+        })
       });
     },[]);
 
     useEffect(() => {
-      placesRepo.getPlaceInfo(positionState,setRestaurants);
-    }, [positionState]);
+      placesRepo.getPlaceInfo(searchCenterState,setRestaurants);
+    }, [searchCenterState]);
 
     const showReviews = (restaurant) => {
       setRestaurantInfo({
@@ -72,10 +77,10 @@ export const App = (props) => {
       setAddedReviews([...addedReviews,review]);
     }
 
-    const centerMoved = (mapProps, map, e) => {
-      setPositionState({
-        lat:e.latLng.lat(),
-        lng:e.latLng.lng()
+    const draggedMap = (mapProps, map) => {
+      setSearchCenterState({
+        lat:map.center.lat(),
+        lng:map.center.lng()
       });
     }
 
@@ -90,9 +95,9 @@ export const App = (props) => {
           google={props.google} 
           zoom={15}
           initialCenter={positionState}
-          center={positionState}
           loadingElement={<Loading/>}
           onClick={onMapClicked}
+          onDragend={draggedMap}
         >
         <div className="burgerButtonContainer"><Icon className="burgerButtonContainer__button" icon={roundMenu} onClick={()=>setVisible("slider--appear")} /></div>
         <Marker 
@@ -102,8 +107,6 @@ export const App = (props) => {
                   anchor: new props.google.maps.Point(32,32),
                   scaledSize: new props.google.maps.Size(64,64)
                 }}
-                draggable={true}
-                onDragend={centerMoved}
         />
 
         {restaurantsToShow.map((restaurant, index)=>{

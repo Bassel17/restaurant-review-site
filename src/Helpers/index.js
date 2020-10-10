@@ -12,3 +12,12 @@ export const makeRestaurantDataStructure = (RestaurantName,RestaurantLocation) =
     return restaurantStructure;
     
 }
+
+export const filterRestaurantByReview = (min,max,restaurants) => {
+    return restaurants.filter((restaurant)=>{
+        console.log(restaurant?.rating);
+        if(typeof restaurant.rating !== 'undefined' )
+            return restaurant?.rating >= min && restaurant?.rating <= max;
+        return false
+    });
+}

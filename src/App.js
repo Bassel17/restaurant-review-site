@@ -8,6 +8,7 @@ import SliderComponent from './Components/SliderComponent/SliderComponent';
 import Loading from './Components/Loading/Loading';
 import RestaurantDetails from './Components/RestaurantDetails/RestaurantDetails';
 import AddRestaurantModal from './Components/AddRestaurantModal/AddRestaurantModal';
+import {filterRestaurantByReview} from './Helpers';
 import GooglePlacesRepo from './Repositories/GooglePlacesRepo/GooglePlacesRepo';
 const placesRepo = new GooglePlacesRepo();
 
@@ -23,6 +24,8 @@ export const App = (props) => {
     const [restaurantInfo, setRestaurantInfo] = useState("");
     const [restaurantModalState, setRestaurantModalState] = useState(false);
     const [clickedPosition, setClickedPosition] = useState();
+    const [maximumValue, setMaximumValue] = useState(5)
+    const [minimumValue, setMinimumValue] = useState(0)
 
 
     useEffect(() => {
@@ -87,10 +90,19 @@ export const App = (props) => {
     if(positionState === ""){
       return <Loading/>
     }else{
-      const restaurantsToShow = [...restaurants,...addedRestaurants]
+      const restaurantsToShow = [...filterRestaurantByReview(minimumValue,maximumValue,restaurants),...addedRestaurants]
     return (
       <React.Fragment>
-        <SliderComponent visible={visible} slideBack = {()=>setVisible("slider--not-appear")} restaurants={restaurantsToShow} showReviews={showReviews}/>
+        <SliderComponent 
+          visible={visible} 
+          slideBack = {()=>setVisible("slider--not-appear")} 
+          restaurants={restaurantsToShow} 
+          showReviews={showReviews}
+          max = {maximumValue}
+          changeMax = {(max) => {setMaximumValue(max)}}
+          min = {minimumValue}
+          changeMin = {(min) => {setMinimumValue(min)}}
+        />
         <Map
           google={props.google} 
           zoom={15}

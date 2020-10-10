@@ -44,6 +44,16 @@ class GooglePlacesRepo {
             }
         });
     }
+
+    async getPlaceStreetView(coordinates,callback){
+        try{
+            const result = await fetch(`https://maps.googleapis.com/maps/api/streetview?size=600x300&location=${coordinates.lat()},${coordinates.lng()}&heading=151.78&pitch=-0.76&key=${process.env.REACT_APP_GOOGLE_API_KEY}`);
+            callback(result.url);
+        }catch(error){
+            console.log(error)
+        }
+        
+    }
 }
 
 export default GooglePlacesRepo;

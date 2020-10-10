@@ -11,10 +11,12 @@ const RestaurantDetails = (props) => {
     const [username, setUsername] = useState("");
     const [review, setReview] = useState("");
     const [rating, setRating] = useState();
+    const [streetViewPhoto, setStreetViewPhoto] = useState("https://www.hopkinsmedicine.org/-/media/feature/noimageavailable.ashx");
 
     useEffect(()=>{
         if( typeof props.info.location !== 'undefined'){
             props.placesRepo.getPlaceDetails(props.info.location,props.info.place_id,setRestaurantDetails)
+            props.placesRepo.getPlaceStreetView(props.info.location,setStreetViewPhoto);
         }
     },[props.info.location, props.info.place_id, props.placesRepo])
 
@@ -49,6 +51,7 @@ const RestaurantDetails = (props) => {
         setRestaurantDetails({
             reviews:[]
         });
+        setStreetViewPhoto("https://www.hopkinsmedicine.org/-/media/feature/noimageavailable.ashx");
     }
 
         return (
@@ -62,9 +65,10 @@ const RestaurantDetails = (props) => {
                     </span>
                 </div>
                 <div className ="restaurant-details__name">
-                <h1>{props.info.name}</h1>
+                    <h1>{props.info.name}</h1>
                 </div>
                 <div className ="restaurant-details__reviews">
+                <img src={streetViewPhoto} width="600px" height="300px" alt="street view"/>
                     {typeof restaurantDetails.reviews !== 'undefined' ? 
                         restaurantDetails.reviews.map((review,index)=>{
                             return <ReviewCard review = {review} key={index}/>;

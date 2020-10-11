@@ -1,4 +1,5 @@
 import React from 'react';
+import './FilterComponent.scss';
 
 const FilterComponent = (props) => {
 
@@ -12,8 +13,8 @@ const FilterComponent = (props) => {
     }
 
     return (
-        <div>
-            Filter restaurants by review
+        <div className="filter-container">
+            Filter restaurants by rating
             <input 
                 type="number"
                 min="0" 

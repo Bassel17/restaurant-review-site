@@ -16,7 +16,7 @@ export const makeRestaurantDataStructure = (RestaurantName,RestaurantLocation) =
 export const filterRestaurantByReview = (min,max,restaurants) => {
     return restaurants.filter((restaurant)=>{
         if(typeof restaurant.rating !== 'undefined' )
-            return restaurant?.rating >= min && restaurant?.rating <= max;
+            return restaurant?.rating >= parseFloat(min) && restaurant?.rating <= parseFloat(max);
         return false
     });
 }

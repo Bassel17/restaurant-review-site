@@ -1,6 +1,6 @@
 import React from 'react';
 import './RestaurantCard.scss';
-import ReactStars from "react-rating-stars-component";
+import Rating from "@material-ui/lab/Rating"
 
 const RestaurantCard = (props) =>{
 
@@ -14,14 +14,12 @@ const RestaurantCard = (props) =>{
             <div className="RestaurantCard__bar">
                 <p className="RestaurantCard__bar__name">{props.restaurantTitle}</p>
                 <div className="RestaurantCard__bar__rating">
-                <ReactStars
-                    count={5}
-                    size={24}
-                    isHalf={true}
-                    edit={false}
-                    activeColor="#ffd700"
-                    value={props.restaurantRating}
-                />
+                    <Rating
+                        name="half-rating-read"
+                        value={props.restaurantRating} 
+                        precision={0.5} 
+                        readOnly
+                    />
                 </div>
             </div>
         </div>

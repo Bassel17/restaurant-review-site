@@ -1,6 +1,6 @@
 import React from 'react';
 import './ReviewCard.scss'
-import ReactStars from "react-rating-stars-component";
+import Rating from "@material-ui/lab/Rating"
 
 const ReviewCard = (props) => {
 
@@ -25,13 +25,11 @@ const ReviewCard = (props) => {
                 </div>
 
                 <div className="ReviewCard-container__review__rating">
-                    <ReactStars
-                        count={5}
-                        size={24}
-                        isHalf={true}
-                        edit={false}
-                        activeColor="#ffd700"
-                        value={props.review.rating}
+                    <Rating
+                        name="half-rating-read"
+                        value={props.review.rating} 
+                        precision={0.5} 
+                        readOnly
                     />
                 </div>
 

@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import './RestaurantDetails.scss';
 import ReviewCard from '../ReviewCard/ReviewCard';
-import ReactStars from "react-rating-stars-component";
+import Rating from "@material-ui/lab/Rating"
 
 const RestaurantDetails = (props) => {
 
@@ -28,7 +28,7 @@ const RestaurantDetails = (props) => {
         setReview(event.target.value);
     }
 
-    const changeRating = (value) => {
+    const changeRating = (event,value) => {
         setRating(value);
     }
 
@@ -104,13 +104,10 @@ const RestaurantDetails = (props) => {
                             required
                         />
                     </div>
-                    <ReactStars
-                        count={5}
-                        size={24}
-                        isHalf={true}
-                        edit={true}
-                        activeColor="#ffd700"
-                        value={rating}
+                    <Rating
+                        name="half-rating"
+                        value={rating} 
+                        precision={0.5} 
                         onChange = {changeRating}
                     />
                     <div>
